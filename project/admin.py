@@ -1,21 +1,31 @@
-from equipments.models import Equipment, Category, SubCategory, Reservation
+from datetime import datetime
+from equipments.models import Reservation
 
-from django.contrib import admin
-from unfold.admin import ModelAdmin
+def get_upcoming_reservations():
+    upcoming_reservations = Reservation.objects.all()
+    #.filter(start_date__gte=datetime.now()).order_by('start_date')
 
+    table_data = {
+        "headers": ["ID", "Start Date"],
+        "rows": [
+            [str(res.id), res.start_date.strftime("%Y-%m-%d %H:%M:%S")] for res in upcoming_reservations
+        ]
+    }
 
-@admin.register(Equipment)
-class EquipmentAdminClass(ModelAdmin):
-    pass
+    return table_data
 
-@admin.register(Category)
-class CategoryGroupAdminClass(ModelAdmin):
-    pass
+def dashboard_callback(request, context):
+    upcoming_reservations = get_upcoming_reservations()
 
-@admin.register(SubCategory)
-class EquipmentCategoryAdminClass(ModelAdmin):
-    pass
+    context.update({
+        "upcoming_reservations": upcoming_reservations,
+    })
 
-@admin.register(Reservation)
-class ReservationAdminClass(ModelAdmin):
-    pass
+    return context
+
+def environment_callback(request):
+    """
+    Callback has to return a list of two values represeting text value and the color
+    type of the label displayed in top right corner.
+    """
+    return ["Development", "info"] # info, danger, warning, success

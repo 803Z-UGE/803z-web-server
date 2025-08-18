@@ -23,7 +23,7 @@ class SubCategory(models.Model):
         verbose_name_plural = "Subcategories"
 
     def __str__(self):
-        return f"{self.group.name} - {self.name}"
+        return f"{self.category.name} - {self.name}"
 
 class Equipment(models.Model):
     serial_number = models.CharField(max_length=4, unique=True, primary_key=True)

@@ -11,23 +11,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterUniqueTogether(
-            name='subcategory',
-            unique_together={('category', 'name')},
-        ),
-        migrations.AddField(
+        migrations.RenameField(
             model_name='subcategory',
-            name='category',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.RESTRICT, related_name='subcategories', to='equipments.category'),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='equipment',
-            name='note',
-            field=models.TextField(blank=True, null=True, verbose_name='Notes internes (visibles par le staff uniquement)'),
-        ),
-        migrations.RemoveField(
-            model_name='subcategory',
-            name='group',
+            old_name='group',
+            new_name='category',
         ),
     ]

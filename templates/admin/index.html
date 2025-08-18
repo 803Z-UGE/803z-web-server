@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% load unfold %}
+
 {% block breadcrumbs %}
     Home
 {% endblock %}
@@ -19,6 +21,23 @@
 {% endblock %}
 
 {% block content %}
-    Start creating your own Tailwind components here
-    {{ custom_variable }}
+    {% component "unfold/components/container.html" %}
+
+        {% component "unfold/components/flex.html" with class="gap-3" %}
+
+            {% component "unfold/components/table.html" with table=upcoming_reservations striped=1 class="lg:w-1/3" %}
+            {% endcomponent %}
+
+            {% component "unfold/components/card.html" with class="lg:w-1/3" %}
+                {% component "unfold/components/text.html" %}
+                    Equipment popularity
+                {% endcomponent %}
+
+                {% component "unfold/components/chart/bar.html" %}
+                {% endcomponent %}
+            {% endcomponent %}
+
+        {% endcomponent %}
+
+    {% endcomponent %}
 {% endblock %}

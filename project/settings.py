@@ -267,7 +267,7 @@ UNFOLD = {
         # 'show_all_applications': True,  # Dropdown with all applications and models
         'navigation': [
             {
-                'title': 'General',
+                # 'title': 'General',
                 'separator': False,  # Top border
                 'collapsible': False,  # Collapsible group of links
                 'items': [
@@ -335,21 +335,7 @@ UNFOLD = {
                 ],
             },
         ],
-    },
-    # 'TABS': [
-    #     # {
-    #     #     'models': [
-    #     #         'app_label.model_name_in_lowercase',
-    #     #     ],
-    #     #     'items': [
-    #     #         {
-    #     #             'title': _('Your custom title'),
-    #     #             'link': reverse_lazy('admin:app_label_model_name_changelist'),
-    #     #             # 'permission': 'sample_app.permission_callback',
-    #     #         },
-    #     #     ],
-    #     # },
-    # ],
+    }
 }
 
 

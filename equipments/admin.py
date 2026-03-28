@@ -1,9 +1,19 @@
-from equipments.models import Equipment, Category, SubCategory, Reservation
+from equipments.models import Equipment, Category, SubCategory, Reservation, EquipmentPicture
 
 from django.contrib import admin
-from unfold.admin import ModelAdmin
+from unfold.admin import ModelAdmin, TabularInline
 from unfold.sections import TableSection
 
+
+class EquipmentPictureInline(TabularInline):
+    model = EquipmentPicture
+    fields = ["id", "image"]
+    readonly_fields = ["id"]
+    ordering_field = "id"
+    show_change_link = True
+    extra = 0
+    per_page = 10
+    tab = True
 
 @admin.register(Equipment)
 class EquipmentAdminClass(ModelAdmin):
@@ -11,21 +21,42 @@ class EquipmentAdminClass(ModelAdmin):
     ordering = ('serial_number',)
     list_filter = ("category", "status")
     search_fields = ("name", "serial_number")
+    inlines = [
+        EquipmentPictureInline
+    ]
     # filter_horizontal = (
     #     "groups",
     #     "user_permissions",
     # )
     pass
 
+# @admin.register(EquipmentPicture)
+# class EquipmentPictureAdminClass(ModelAdmin):
+#     list_display = ('equipment', 'created_at', 'updated_at')
+#     ordering = ('-created_at',)
+#     list_filter = ('equipment',)
+#     search_fields = ('equipment__name',)
+
 class SubcategoryTableSection(TableSection):
     height = 300  # Force the table height. Ideal for large amount of records
     related_name = "subcategories"  # Related model field name
     fields = ["name", "category", "id"]  # Fields from related model
 
+class SubcategoryInline(TabularInline):
+    model = SubCategory
+    fields = ["name"]
+    # readonly_fields = ["id"]
+    ordering_field = "id"
+    # show_change_link = True
+    extra = 0
+    per_page = 10
+    tab = True
+
 @admin.register(Category)
 class CategoryAdminClass(ModelAdmin):
     list_display = ('name', 'created_at', 'updated_at')
     list_sections = [SubcategoryTableSection]
+    inlines = [SubcategoryInline]
     pass
 
 @admin.register(SubCategory)

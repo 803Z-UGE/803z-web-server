@@ -21,6 +21,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, Spec
 from equipments.api import EquipmentViewSet, CategoryGroupViewSet, EquipmentCategoryViewSet, ReservationViewSet
 from accounts.api import UserViewSet, AccountViewSet
 from scalar.scalar import urlpatterns_scalar
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
 
@@ -39,4 +41,4 @@ urlpatterns = [
     # Optional UI:
     # path('api/schema/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     # path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
-]+ urlpatterns_scalar
+] + urlpatterns_scalar + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -42,6 +42,15 @@ class Equipment(models.Model):
     def __str__(self):
         return f"{self.serial_number} - {self.name}"
     
+class EquipmentPicture(models.Model):
+    equipment = models.ForeignKey(Equipment, related_name='pictures', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='equipment_pictures/')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Picture of {self.equipment.name}"
+
 class Reservation(models.Model):
     equipment = models.ManyToManyField(Equipment, related_name='reservations')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reservations', on_delete=models.RESTRICT)

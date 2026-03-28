@@ -9,6 +9,7 @@ django-rest-framework = "*"
 drf-spectacular = "*"
 django-cors-headers = "*"
 django-unfold = "*"
+pillow = "*"
 
 [dev-packages]
 
